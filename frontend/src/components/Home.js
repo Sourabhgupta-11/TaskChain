@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import DotBackground from "./DotBackground";
 
 const Home = () => {
   const address = localStorage.getItem("walletAddress");
@@ -60,8 +61,9 @@ const Home = () => {
 
   return (
     <div className="page">
+      <DotBackground active={loading} />
       <div className="card" style={{ maxWidth: "600px" }}>
-        <h2>Welcome to Todo DApp 🚀</h2>
+        <h2><i>Welcome to <b>TaskChain</b></i></h2>
 
         <p>
           Manage your blockchain-secured tasks and track your progress.

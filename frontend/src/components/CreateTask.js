@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import { getSigner, isDemoMode } from "../utils/getProvider";
+import DotBackground from "./DotBackground";
 const TodoABI=require("../TodoApp.json");
 
 const CreateTask = () => {
@@ -44,6 +45,7 @@ const CreateTask = () => {
 
     return (
     <div className="page">
+        <DotBackground active={loading} />
         <div className="card" style={{ maxWidth: "520px" }}>
         <h2>Create New Task</h2>
 

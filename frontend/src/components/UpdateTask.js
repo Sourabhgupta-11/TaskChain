@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ethers } from "ethers";
 import TodoABI from "../TodoApp.json";
 import { getSigner, isDemoMode } from "../utils/getProvider";
+import DotBackground from "./DotBackground";
 
 const CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADDRESS;
 
@@ -83,6 +84,7 @@ const UpdateTask = () => {
 
   return (
     <div className="page">
+      <DotBackground active={loading || fetching} />
       <div className="card" style={{ maxWidth: "560px" }}>
         <h2>Update Task</h2>
 
