@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import TodoABI from "../TodoApp.json";
+import { getSigner, isDemoMode } from "../utils/getProvider";
 
 const CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADDRESS;
 
@@ -55,15 +56,9 @@ const UpdateTask = () => {
     }
 
     try {
-      if (!window.ethereum) {
-        alert("MetaMask not found");
-        return;
-      }
-
       setLoading(true);
 
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
+      const signer = await getSigner();
 
       const contract = new ethers.Contract(
         CONTRACT_ADDRESS,
@@ -80,7 +75,7 @@ const UpdateTask = () => {
       setDate("");
     } catch (err) {
       console.error(err);
-      alert("Transaction failed");
+      alert(err.message || "Transaction failed");
     } finally {
       setLoading(false);
     }
@@ -90,6 +85,12 @@ const UpdateTask = () => {
     <div className="page">
       <div className="card" style={{ maxWidth: "560px" }}>
         <h2>Update Task</h2>
+
+        {isDemoMode() && (
+          <p style={{ fontSize: "13px", color: "#facc15" }}>
+            🧪 Demo Mode: using shared demo wallet on Sepolia testnet.
+          </p>
+        )}
 
         <p>
           Enter a task ID to fetch and update your task stored on the blockchain.

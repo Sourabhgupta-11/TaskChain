@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import { getSigner, isDemoMode } from "../utils/getProvider";
 const TodoABI=require("../TodoApp.json");
 
 const CreateTask = () => {
@@ -18,13 +19,7 @@ const CreateTask = () => {
     try {
     setLoading(true);
 
-    if (!window.ethereum) {
-    alert("MetaMask not found");
-    return;
-    }
-
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
+    const signer = await getSigner();
 
     const contract = new ethers.Contract(
     CONTRACT_ADDRESS,
@@ -41,7 +36,7 @@ const CreateTask = () => {
 
     } catch (error) {
     console.error(error);
-    alert("Transaction failed");
+    alert(error.message || "Transaction failed");
     } finally {
     setLoading(false);
     }
@@ -51,6 +46,12 @@ const CreateTask = () => {
     <div className="page">
         <div className="card" style={{ maxWidth: "520px" }}>
         <h2>Create New Task</h2>
+
+        {isDemoMode() && (
+          <p style={{ fontSize: "13px", color: "#facc15" }}>
+            🧪 Demo Mode: using shared demo wallet on Sepolia testnet.
+          </p>
+        )}
 
         <p>
             Add a new task to your decentralized todo list. The task will be
